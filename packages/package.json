@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "@com.thunisoft.artery/artery-ui": "1.1.2",
+    "animejs": "^3.2.1",
+    "babel-polyfill": "^6.26.0",
+    "lodash": "^4.17.20",
+    "prismjs": "^1.23.0",
+    "rxjs": "^6.6.7",
+    "smooth-scrollbar": "^8.6.1",
+    "vue": "^2.6.12"
+  },
+  "module": "./index.js",
+  "typings": "./index.d.ts"
+}

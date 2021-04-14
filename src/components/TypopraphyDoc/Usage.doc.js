@@ -1,0 +1,1 @@
+import Typography from 'thunisoft-ui/esm/Typography'
