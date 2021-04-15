@@ -4,19 +4,19 @@ export default [
     level: 1,
     children: [
       {
-        label: 'Install 安装',
+        label: '安装',
         leaf: true,
         level: 2,
         href: '/install'
       },
       {
-        label: 'Usage 使用',
+        label: '使用',
         leaf: true,
         level: 2,
         href: '/usage'
       },
       {
-        label: 'Templates 模板',
+        label: '模板',
         leaf: true,
         level: 2,
         href: '/templates'

@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import { withStyles } from '../styles'
+import AtyIcon from '@com.thunisoft.artery/artery-ui/lib/aty-icon'
+import '@com.thunisoft.artery/artery-ui/src/components/css/common/iconfont/ionicons.less'
 
 const styles = {
   root: {

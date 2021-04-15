@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
-import { Theme, AppBar, Typography, ScrollPanel, FlexItem, Icon, Button, withStyles } from 'packages'
+import { Theme, ThemeProvider, AppBar, Typography, ScrollPanel, FlexItem, Icon, Button, withStyles } from 'packages'
 
 const styles = (theme) => {
   return {
@@ -37,4 +37,11 @@ class App extends Vue {
   }
 }
 
-export default withStyles(styles)(App)
+export default {
+  render () {
+    const Body = withStyles(styles)(App)
+    return <ThemeProvider>
+      <Body />
+    </ThemeProvider>
+  }
+}

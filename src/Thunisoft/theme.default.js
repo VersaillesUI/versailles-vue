@@ -24,11 +24,11 @@ export default {
   scrollbar: {
     thumbY: {
       width: '6px',
-      marginLeft: '1px'
+      marginLeft: '2px'
     },
     thumbX: {
       height: '6px',
-      marginTop: '1px'
+      marginTop: '2px'
     }
   },
   overrides: {
@@ -38,22 +38,6 @@ export default {
       },
       small: {
         height: '56px'
-      }
-    },
-    ListSubheader: {
-      content: {
-        borderRadius: '4px',
-        '&:hover': {
-          background: primaryMain
-        }
-      }
-    },
-    ListItem: {
-      content: {
-        borderRadius: '4px',
-        '&:hover': {
-          background: primaryMain
-        }
       }
     },
     TableHeader: {

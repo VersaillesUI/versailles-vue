@@ -45,6 +45,13 @@ export const styles = (theme) => {
       '>td': {
         borderTopWidth: 0
       }
+    },
+    bodyWrapper: {
+      height: '100%',
+      overflow: 'hidden',
+      '.scrollbar-track': {
+        zIndex: 12
+      }
     }
   }
 }
@@ -67,6 +74,18 @@ export const props = {
   },
   defaultAlign: {
     type: String
+  },
+  width: {
+    type: String
+  },
+  hasScroller: {
+    type: Boolean,
+    default () {
+      return true
+    }
+  },
+  tableWidth: {
+    type: Number
   }
 }
 
@@ -74,11 +93,12 @@ const Table = Vue.extend({
   props,
   methods: {
     renderColGroups () {
+      if (!this.colgroups) return []
       return this.colgroups.map(o => {
         return <col width={o.width}></col>
       })
     },
-    renderRows (data) {
+    renderRows (data, columns) {
       if (!data) return
       return data.map((o, index) => {
         return <tr class={clsx([
@@ -86,7 +106,7 @@ const Table = Vue.extend({
           this.bordered && index === 0 && this.classes.firstRow
         ])}>
           {
-            this.columns.map(col => {
+            columns.map(col => {
               return <td class={clsx([
                 this.classes.cell,
                 this.classes[col.align || this.defaultAlign],
@@ -103,24 +123,44 @@ const Table = Vue.extend({
       })
     },
     handleScrollbarPositionUpdate (scrollbar) {
-      this.$emit('scrollLeft', scrollbar.scrollLeft)
+      this.$emit('scroll', scrollbar)
+    },
+    scrollTo (x, y) {
+      if (this.hasScroller) {
+        this.$refs.scrollPanel.scrollTo(x, y)
+      } else {
+        this.$refs.scrollPanel.scrollLeft = x
+        this.$refs.scrollPanel.scrollTop = y
+      }
+    }
+  },
+  computed: {
+    ScrollPanel () {
+      return this.hasScroller ? ScrollPanel : 'div'
     }
   },
   render (h) {
-    return <ScrollPanel contentStyle={{
-      display: 'flex',
-      flexDirection: 'column',
-      overflow: 'hidden'
-    }} onUpdate={this.handleScrollbarPositionUpdate} class={this.classes.root}>
-      <table class={this.classes.table}>
-        <colgroup>
-          {this.renderColGroups()}
-        </colgroup>
-        <tbody>
-          {this.renderRows(this.dataSource)}
-        </tbody>
-      </table>
-    </ScrollPanel>
+    return <div class={this.classes.root}>
+      <this.ScrollPanel
+        ref="scrollPanel"
+        class={this.classes.bodyWrapper}
+        contentStyle={this.hasScroller && {
+          display: 'flex',
+          flexDirection: 'column',
+          overflow: 'hidden',
+          width: this.tableWidth + 'px'
+        }}
+        onUpdate={this.handleScrollbarPositionUpdate}>
+        <table class={this.classes.table} style={{ width: this.width }}>
+          <colgroup>
+            {this.renderColGroups()}
+          </colgroup>
+          <tbody>
+            {this.renderRows(this.dataSource, this.columns)}
+          </tbody>
+        </table>
+      </this.ScrollPanel>
+    </div>
   }
 })
 

@@ -61,7 +61,15 @@ export const props = {
   },
   defaultAlign: {
     type: String
+  },
+  width: {
+    type: String
   }
+}
+
+const FIXED = {
+  LEFT: 'left',
+  RIGHT: 'right'
 }
 
 const Table = Vue.extend({
@@ -134,6 +142,7 @@ const Table = Vue.extend({
       </th>
     },
     renderColGroups () {
+      if (!this.colgroups) return []
       return this.colgroups.map(o => {
         return <col width={o.width}></col>
       })
@@ -141,7 +150,7 @@ const Table = Vue.extend({
   },
   render (h) {
     return <div class={this.classes.root}>
-      <table class={this.classes.table}>
+      <table class={this.classes.table} style={{ width: this.width }}>
         <colgroup>
           {this.renderColGroups()}
         </colgroup>

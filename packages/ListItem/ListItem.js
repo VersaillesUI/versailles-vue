@@ -24,7 +24,7 @@ const styles = (theme) => {
       }
     },
     label: {
-      minHeight: '1.75em',
+      minHeight: '1.5em',
       lineHeight: 'inherit',
       display: 'inline-flex',
       alignItems: 'center'

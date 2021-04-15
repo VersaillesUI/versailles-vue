@@ -26,22 +26,6 @@ export default {
       root: {
         backgroundImage: 'linear-gradient(90deg, rgba(168,34,36,0.50) 29%, #A82224 64%)'
       }
-    },
-    ListSubheader: {
-      content: {
-        borderRadius: '4px',
-        '&:hover': {
-          background: primaryMain
-        }
-      }
-    },
-    ListItem: {
-      content: {
-        borderRadius: '4px',
-        '&:hover': {
-          background: primaryMain
-        }
-      }
     }
   }
 }

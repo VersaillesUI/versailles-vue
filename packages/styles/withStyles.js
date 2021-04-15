@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import { Theme } from '..'
-import { toLowerCase, styleObjectToKebabCaseObject } from '../utils'
+import { styleObjectToKebabCaseObject } from '../utils'
 import merge from 'lodash/merge'
 import isEmpty from 'lodash/isEmpty'
 
@@ -17,7 +17,8 @@ function insertCSS (styleStr, metaInfo, beforeNodeId, prefix) {
       document.head.insertBefore(style, beforeNode)
     } else {
       if (prefix) {
-        const noprefixNode = document.querySelector(`[data-prefix=""]`)
+        const noprefixNodes = document.querySelectorAll(`[data-prefix=""]`)
+        const noprefixNode = noprefixNodes[noprefixNodes.length - 1]
         document.head.insertBefore(style, noprefixNode)
       } else {
         document.head.appendChild(style)
@@ -25,6 +26,7 @@ function insertCSS (styleStr, metaInfo, beforeNodeId, prefix) {
     }
   }
   style.innerHTML = styleStr
+  return style
 }
 
 function parse (cssjson, inside = false) {
@@ -71,8 +73,8 @@ export function toCSS (cssjson) {
 }
 
 export function createGlobalStyles (stylesheet, metaInfo, beforeNodeId = '', prefix = '') {
-  const inlineCss = toCSS(parse(stylesheet))
-  insertCSS(inlineCss, metaInfo, beforeNodeId, prefix)
+  const inlineCSS = toCSS(parse(stylesheet))
+  insertCSS(inlineCSS, metaInfo, beforeNodeId, prefix)
 }
 
 export default (styles, prefix = '', branch = 'jss') => {
@@ -83,7 +85,7 @@ export default (styles, prefix = '', branch = 'jss') => {
           classes: {}
         }
       },
-      created () {
+      beforeMount () {
         this.$theme.observe.subscribe(() => {
           this.$theme.presets.delete(WrappedComponent)
           this._createClassNames()
@@ -94,6 +96,12 @@ export default (styles, prefix = '', branch = 'jss') => {
       mounted () {
         if (navigator.userAgent.indexOf('Trident') > -1) {
           this._createClassNames()
+        }
+      },
+      beforeDestroy () {
+        const node = document.querySelector(`[data-meta="${this._metaInfoId}"]`)
+        if (node) {
+          document.head.removeChild(node)
         }
       },
       inject: ['$theme'],

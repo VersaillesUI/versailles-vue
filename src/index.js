@@ -11,8 +11,8 @@ Vue.use(VueRouter)
 new Vue({
   router,
   render () {
-    return <ThemeProvider>
+    return <div>
       <router-view></router-view>
-    </ThemeProvider>
+    </div>
   }
 }).$mount('#app')

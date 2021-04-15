@@ -46,7 +46,6 @@ const ScrollPanel = Vue.extend({
     initStyle () {
       const { paddingLeft, paddingRight, paddingTop, paddingBottom } = getComputedStyle(this.$el, 'padding')
       const { fontSize } = getComputedStyle(this.$el, 'font')
-      console.log(fontSize)
       this.paddingStyles = {
         paddingLeft,
         paddingRight,
@@ -54,6 +53,9 @@ const ScrollPanel = Vue.extend({
         paddingBottom,
         fontSize
       }
+    },
+    scrollTo (x, y) {
+      this.$refs.scroller.scrollTo(x, y)
     }
   },
   render (h) {
