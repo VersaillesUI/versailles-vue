@@ -1,25 +1,27 @@
 import { IBaseProps } from '..'
+import { DefineComponent } from 'vue'
 
-declare namespace JSX {
-  interface Element {
-      [elemName: string]: any;
-  }
-}
-
-export interface IProps extends IBaseProps {
+interface IProps extends IBaseProps {
   /**
-   * #### 设置组件默认尺寸  
-   * 默认：`meidum`
-   */
+    * @description 设置组件默认尺寸  
+    * @default meidum
+    */
   size?: 'small' | 'large' | 'medium';
   /**
-   * #### 设置组件定位属性  
-   * 默认：`fixed`
-   */
+    * @description 设置组件定位属性  
+    * @default fixed
+    */
   position?: 'fixed' | 'static' | 'absolute' | 'relative';
   elevation?: Number;
 }
 
-declare function AppBar(props: IProps): JSX.Element
+/**
+ * @description 顶部栏面板
+ * @property size - medium
+ * @property position - fixed
+ * @property elevation
+ * 
+ */
+declare const _default: DefineComponent<IProps>
 
-export default AppBar
+export default _default

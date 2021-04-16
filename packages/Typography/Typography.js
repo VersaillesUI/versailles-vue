@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import withStyles from '../styles/withStyles'
 import clsx from 'clsx'
 
@@ -125,7 +125,7 @@ export const props = {
   }
 }
 
-const Typography = Vue.extend({
+const Typography = defineComponent({
   props,
   computed: {
     tag () {
@@ -133,15 +133,11 @@ const Typography = Vue.extend({
     }
   },
   render (h) {
-    return <this.tag {
-      ...{
-        on: this.$listeners
-      }
-    } class={clsx([this.classes.root, 
+    return <this.tag {...this.$attrs} class={clsx([this.classes.root, 
       this.classes[this.varient], 
       this.gutterBottom && this.classes.gutterBottom,
       this.fullWidth && this.classes.fullWidth,
-      this.classes[this.textTransform]])}>{this.$slots.default}</this.tag>
+      this.classes[this.textTransform]])}>{this.$slots.default()}</this.tag>
   }
 })
 

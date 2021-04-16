@@ -1,5 +1,4 @@
-import Vue from 'vue'
-import Component from 'vue-class-component'
+import { defineComponent } from 'vue'
 import { Button, Typography, FlexBox, FlexItem, Paper, Link, Input, ScrollPanel, withStyles } from 'packages'
 
 const styles = (theme) => {
@@ -48,43 +47,44 @@ const styles = (theme) => {
   }
 }
 
-@Component
-class Palette extends Vue {
-  get colors () {
-    const colors = [
-      '#f44336', '#e91e63', '#9c27b0', '#673ab7',
-      '#3f51b5', '#2196f3', '#03a9f4', '#00bcd4',
-      '#009688', '#4caf50', '#8bc34a', '#cddc39',
-      '#ffeb3b', '#ffc107', '#ff9800', '#ff5722'
-    ]
-    return colors
-  }
-  primaryColor
-  secondaryColor
-  handlePrimaryClick (color) {
-    return () => {
-      this.primaryColor = color
-      this.$theme.updateWith({
-        colors: {
-          primary: {
-            main: color
-          }
-        }
-      })
+const Palette = defineComponent({
+  computed: {
+    colors () {
+      const colors = [
+        '#f44336', '#e91e63', '#9c27b0', '#673ab7',
+        '#3f51b5', '#2196f3', '#03a9f4', '#00bcd4',
+        '#009688', '#4caf50', '#8bc34a', '#cddc39',
+        '#ffeb3b', '#ffc107', '#ff9800', '#ff5722'
+      ]
+      return colors
     }
-  }
-  handleSecondaryClick (color) {
-    return () => {
-      this.secondaryColor = color
-      this.$theme.updateWith({
-        colors: {
-          secondary: {
-            main: color
+  },
+  methods: {
+    handlePrimaryClick (color) {
+      return () => {
+        this.primaryColor = color
+        this.theme.updateWith({
+          colors: {
+            primary: {
+              main: color
+            }
           }
-        }
-      })
+        })
+      }
+    },
+    handleSecondaryClick (color) {
+      return () => {
+        this.secondaryColor = color
+        this.theme.updateWith({
+          colors: {
+            secondary: {
+              main: color
+            }
+          }
+        })
+      }
     }
-  }
+  },
   render () {
     return (
       <ScrollPanel class={this.classes.root}>
@@ -169,6 +169,6 @@ class Palette extends Vue {
       </ScrollPanel>
     )
   }
-}
+})
 
 export default withStyles(styles)(Palette)

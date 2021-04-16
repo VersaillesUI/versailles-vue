@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import { withStyles } from '../styles'
 import ScrollPanel from '../ScrollPanel'
 import clsx from 'clsx'
@@ -72,7 +72,7 @@ const FIXED = {
   RIGHT: 'right'
 }
 
-const Table = Vue.extend({
+const Table = defineComponent({
   props,
   methods: {
     traverse (data, callback, deepIndex = 0) {

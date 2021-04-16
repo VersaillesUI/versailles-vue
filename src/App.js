@@ -1,5 +1,4 @@
-import Vue from 'vue'
-import Component from 'vue-class-component'
+import { defineComponent } from 'vue'
 import { Theme, ThemeProvider, AppBar, Typography, ScrollPanel, FlexItem, Icon, Button, withStyles } from 'packages'
 
 const styles = (theme) => {
@@ -17,8 +16,7 @@ const styles = (theme) => {
   }
 }
 
-@Component
-class App extends Vue {
+const App = defineComponent({
   render () {
     return (
       <div>
@@ -35,13 +33,13 @@ class App extends Vue {
       </div>
     )
   }
-}
+})
 
-export default {
+export default defineComponent({
   render () {
     const Body = withStyles(styles)(App)
     return <ThemeProvider>
       <Body />
     </ThemeProvider>
   }
-}
+})

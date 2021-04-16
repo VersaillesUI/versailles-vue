@@ -1,9 +1,10 @@
-import Vue from 'vue'
+import { defineComponent, inject, getCurrentInstance } from 'vue'
 import { Theme } from '..'
 import { styleObjectToKebabCaseObject } from '../utils'
 import merge from 'lodash/merge'
 import isEmpty from 'lodash/isEmpty'
 
+const isInternetExploreBrowser = /(Trident)|(MSIE)/.test(navigator.userAgent)
 const NEXT_PREFIX = /^(\&)|(\>)|(\.)|(\#)|(\+)|(\~)/
 
 function insertCSS (styleStr, metaInfo, beforeNodeId, prefix) {
@@ -11,8 +12,8 @@ function insertCSS (styleStr, metaInfo, beforeNodeId, prefix) {
   if (!style) {
     const beforeNode = beforeNodeId && document.querySelector(`[data-meta="${beforeNodeId}"]`)
     style = document.createElement('style')
-    style.setAttribute('data-meta', metaInfo)
-    style.setAttribute('data-prefix', prefix)
+    style.dataset.meta = metaInfo
+    style.dataset.prefix = prefix || ''
     if (beforeNode) {
       document.head.insertBefore(style, beforeNode)
     } else {
@@ -25,7 +26,7 @@ function insertCSS (styleStr, metaInfo, beforeNodeId, prefix) {
       }
     }
   }
-  style.innerHTML = styleStr
+  style.appendChild(document.createTextNode(styleStr))
   return style
 }
 
@@ -46,12 +47,14 @@ function parse (cssjson, inside = false) {
         currentJSON[subkey] = val[subkey]
       }
     }
-    result[cssKey] = {}
+    const value = {}
+    result[cssKey] = value
     if (!isEmpty(nextJSON)) {
-      Object.assign(result, parse(nextJSON, true))
+      const next = parse(nextJSON, true)
+      Object.assign(result, next)
     }
     if (!isEmpty(currentJSON)) {
-      Object.assign(result[cssKey], styleObjectToKebabCaseObject(currentJSON))
+      Object.assign(value, styleObjectToKebabCaseObject(currentJSON))
     }
   }
   return result
@@ -79,51 +82,56 @@ export function createGlobalStyles (stylesheet, metaInfo, beforeNodeId = '', pre
 
 export default (styles, prefix = '', branch = 'jss') => {
   return (WrappedComponent) => {
-    return Vue.extend({
+    return defineComponent({
       data () {
         return {
           classes: {}
         }
       },
-      beforeMount () {
-        this.$theme.observe.subscribe(() => {
-          this.$theme.presets.delete(WrappedComponent)
+      created () {
+        this.theme.observe.subscribe(() => {
+          this.theme.presets.delete(WrappedComponent)
           this._createClassNames()
         })
-        if (navigator.userAgent.indexOf('Trident') > -1) return
+        if (isInternetExploreBrowser) return
         this._createClassNames()
       },
       mounted () {
-        if (navigator.userAgent.indexOf('Trident') > -1) {
+        if (isInternetExploreBrowser) {
           this._createClassNames()
         }
       },
-      beforeDestroy () {
+      beforeUnmount () {
         const node = document.querySelector(`[data-meta="${this._metaInfoId}"]`)
         if (node) {
           document.head.removeChild(node)
         }
       },
-      inject: ['$theme'],
+      setup () {
+        const theme = inject('theme')
+        return {
+          theme
+        }
+      },
       methods: {
         _createClassNames () {
-          const { presets } = this.$theme
+          const { presets } = this.theme
           const regiserted = presets.has(WrappedComponent)
           if (!regiserted) {
             if (!prefix) {
-              this.$theme.styleIndex += 1
+              this.theme.styleIndex += 1
             }
-            const { overrides } = this.$theme
-            const displayPrefix = this.$theme.uuid ? [branch, this.$theme.uuid, prefix || 'element'].join('-') : [branch, prefix || 'element'].join('-')
+            const { overrides } = this.theme
+            const displayPrefix = this.theme.uuid ? [branch, this.theme.uuid, prefix || 'element'].join('-') : [branch, prefix || 'element'].join('-')
             const result = {}
             const stylesheet = {}
-            const nextStyle = typeof styles === 'function' ? styles(this.$theme) : styles
-            this._metaInfoId = WrappedComponent.mid = prefix ? displayPrefix : displayPrefix + '-' + this.$theme.styleIndex
+            const nextStyle = typeof styles === 'function' ? styles(this.theme) : styles
+            this._metaInfoId = WrappedComponent.mid = prefix ? displayPrefix : displayPrefix + '-' + this.theme.styleIndex
             if (prefix && overrides[prefix]) {
               merge(nextStyle, overrides[prefix])
             }
             for (let key in nextStyle) {
-              const classKey = prefix ? `${displayPrefix}-${key}` : `${displayPrefix}-${key}-${this.$theme.styleIndex}`
+              const classKey = prefix ? `${displayPrefix}-${key}` : `${displayPrefix}-${key}-${this.theme.styleIndex}`
               result[key] = classKey
               stylesheet[classKey] = nextStyle[key]
             }

@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import { withStyles } from '../styles'
 import Button from '../Button'
 import FlexBox from '../FlexBox'
@@ -15,11 +15,11 @@ export const props = {
   
 }
 
-const NavBar = Vue.extend({
+const NavBar = defineComponent({
   props,
   render () {
     return <FlexBox alignItems="center" class={this.classes.root}>
-      {this.$slots.default}
+      {this.$slots.default()}
     </FlexBox>
   }
 })

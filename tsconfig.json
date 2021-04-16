@@ -13,7 +13,7 @@
     "allowSyntheticDefaultImports": true,
     "noErrorTruncation": false,
     "allowJs": true,
-    "types": ["node", "vue"],
+    "types": ["node"],
     "paths": {
       "packages/*": ["packages/*"],
       "thunisoft-ui/esm/*": ["packages/*"]

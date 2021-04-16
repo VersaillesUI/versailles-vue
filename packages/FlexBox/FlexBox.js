@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import withStyles from '../styles/withStyles'
 import clsx from 'clsx'
 import PropTypes from '../propTypes'
@@ -52,7 +52,7 @@ export const props = {
   }
 }
 
-const FlexBox = Vue.extend({
+const FlexBox = defineComponent({
   props,
   computed: {
     className () {
@@ -66,11 +66,7 @@ const FlexBox = Vue.extend({
     }
   },
   render (h) {
-    return <div {
-      ...{
-        on: this.$listeners
-      }
-    } class={this.classes[this.className]} style={this.styles}>{this.$slots.default}</div>
+    return <div {...this.$attrs} class={this.classes[this.className]} style={this.styles}>{this.$slots.default()}</div>
   }
 })
 

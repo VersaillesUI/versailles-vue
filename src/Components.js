@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import { Button, FlexItem, Paper, List, ListItem, ListSubheader, ScrollPanel, withStyles } from 'packages'
 
 const styles = (theme) => {
@@ -256,7 +256,7 @@ const NAV_CONFIG = [
   }
 ]
 
-const Components = Vue.extend({
+const Components = defineComponent({
   methods: {
     renderNodes (data) {
       if (!data) return null

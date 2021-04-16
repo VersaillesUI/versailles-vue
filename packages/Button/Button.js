@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import withStyles from '../styles/withStyles'
 import clsx from 'clsx'
 import PropTypes from '../propTypes'
@@ -209,14 +209,10 @@ export const props = {
   }
 }
 
-const Button = Vue.extend({
+const Button = defineComponent({
   props,
   render (h) {
-    return <this.component {
-      ...{
-        on: this.$listeners
-      }
-    } disabled={this.disabled} class={clsx([
+    return <this.component {...this.$attrs} disabled={this.disabled} class={clsx([
       this.classes.root,
       this.disabled && this.classes.disabled,
       this.fullWidth && this.classes.fullWidth,
@@ -226,7 +222,7 @@ const Button = Vue.extend({
       this.classes[this.varient + this.size.replace(/^[a-z]/, match => match.toUpperCase())]
     ])}>
       {this.startIcon}
-      <span class={this.classes.label}>{this.$slots.default}</span>
+      <span class={this.classes.label}>{this.$slots.default()}</span>
       {this.endIcon}
     </this.component>
   }

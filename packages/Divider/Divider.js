@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import { withStyles } from '../styles'
 import clsx from 'clsx'
 
@@ -47,7 +47,7 @@ export const props = {
   }
 }
 
-const Divider = Vue.extend({
+const Divider = defineComponent({
   props,
   render () {
     return <this.component class={clsx([

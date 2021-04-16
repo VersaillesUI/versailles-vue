@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import withStyles from '../styles/withStyles'
 import clsx from 'clsx'
 import FlexBox from '../FlexBox'
@@ -50,7 +50,7 @@ export const props = {
   }
 }
 
-const AppBar = Vue.extend({
+const AppBar = defineComponent({
   props,
   computed: {
     styles () {
@@ -61,13 +61,9 @@ const AppBar = Vue.extend({
   },
   render (h) {
     return (
-      <Paper {
-        ...{
-          on: this.$listeners
-        }
-      } elevation={this.elevation} square style={this.styles} class={clsx([this.classes.root, this.classes[this.size]])}>
+      <Paper {...this.$attrs} elevation={this.elevation} square style={this.styles} class={clsx([this.classes.root, this.classes[this.size]])}>
         <FlexBox height="100%">
-          {this.$slots.default}
+          {this.$slots.default()}
         </FlexBox>
       </Paper>
     )

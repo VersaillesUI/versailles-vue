@@ -71,7 +71,7 @@ const Doc = {
       <Typography gutterBottom varient="h5">{this.description}</Typography>
       <CodeHighlight class={this.classes.margin} code={this.usageDoc} />
       <div class={this.classes.margin}>
-        {this.$slots.default}
+        {this.$slots.default()}
       </div>
       <Typography class={this.classes.margin} gutterBottom varient="h4">API</Typography>
       <Table defaultAlign="left" columns={this.propColumns} dataSource={this.propDataSource}></Table>

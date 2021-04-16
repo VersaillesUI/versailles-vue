@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import { withStyles } from '../styles'
 import Prismjs from 'prismjs'
 import 'prismjs/themes/prism.css'
@@ -42,7 +42,7 @@ export const props = {
   }
 }
 
-const CodeHighlight = Vue.extend({
+const CodeHighlight = defineComponent({
   props,
   computed: {
     highlightedCode () {

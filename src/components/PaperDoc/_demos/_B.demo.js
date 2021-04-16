@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import Paper from 'thunisoft-ui/esm/Paper'
 import { withStyles } from 'thunisoft-ui/esm/styles'
 
@@ -16,7 +16,7 @@ export const styles = theme => {
   }
 }
 
-const Component = Vue.extend({
+const Component = defineComponent({
   render () {
     return <div class={this.classes.root}>
       <Paper varient="outlined" class={this.classes.paper} elevation={0}></Paper>

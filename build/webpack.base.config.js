@@ -1,11 +1,27 @@
 const path = require('path')
-const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const VueLoaderPlugin = require('vue-loader-v16/dist/plugin').default
 
 const root = process.cwd()
 
+const babelConfig = {
+  cacheDirectory: true,
+  presets: [
+    '@babel/preset-env'
+  ],
+  plugins: [
+    '@vue/babel-plugin-jsx',
+    '@babel/plugin-proposal-optional-chaining',
+    '@babel/plugin-transform-object-assign',
+    '@babel/plugin-proposal-object-rest-spread',
+    '@babel/plugin-proposal-export-default-from',
+    '@babel/plugin-proposal-export-namespace-from',
+    '@babel/plugin-proposal-class-properties'
+  ]
+}
+
 module.exports = {
   resolve: {
-    extensions: ['.js', '.jsx', '.ts', '.tsx', '.vue', '.md'],
+    extensions: ['.js', '.jsx', '.vue', '.md'],
     alias: {
       'packages': path.resolve(process.cwd(), 'packages'),
       'src': path.resolve(process.cwd(), 'src'),
@@ -22,21 +38,8 @@ module.exports = {
         test: /\.jsx?$/,
         loader: 'babel-loader',
         exclude: [path.resolve('node_modules/@popperjs')],
-        include: [path.resolve('node_modules/@com.thunisoft.artery/artery-ui'), root]
-      },
-      {
-        test: /\.tsx?/,
-        loader: [
-          'babel-loader',
-          {
-            loader: 'ts-loader',
-            options: {
-              transpileOnly: true,
-              appendTsSuffixTo: ['\\.vue$'],
-              happyPackMode: false,
-            }
-          }
-        ]
+        include: [path.resolve('node_modules/@com.thunisoft.artery/artery-ui'), root],
+        options: babelConfig
       },
       {
         test: /\.css$/,

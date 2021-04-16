@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import Button from 'thunisoft-ui/esm/Button'
 import { withStyles } from 'thunisoft-ui/esm/styles'
 
@@ -14,7 +14,7 @@ export const styles = theme => {
   }
 }
 
-const Component = Vue.extend({
+const Component = defineComponent({
   render () {
     return <div class={this.classes.root}>
       <Button class={this.classes.button} color="primary">PRIMARY</Button>

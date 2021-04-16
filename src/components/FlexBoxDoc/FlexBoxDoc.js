@@ -31,7 +31,7 @@ const ComponentDoc = {
       })
     },
     classNames () {
-      const classes = flexBoxStyles(this.$theme)
+      const classes = flexBoxStyles(this.theme)
       return sortBy(Object.keys(classes)).map(key => {
         return {
           name: key,

@@ -1,3 +1,4 @@
+import { defineComponent } from 'vue'
 import withStyles from '../styles/withStyles'
 import clsx from 'clsx'
 
@@ -49,7 +50,7 @@ export const props = {
   }
 }
 
-const FlexBox = {
+const FlexBox = defineComponent({
   props,
   computed: {
     styles () {
@@ -57,12 +58,8 @@ const FlexBox = {
     }
   },
   render (h) {
-    return <div {
-      ...{
-        on: this.$listeners
-      }
-    } style={this.styles}>{this.$slots.default}</div>
+    return <div {...this.$attrs} style={this.styles}>{this.$slots.default()}</div>
   }
-}
+})
 
 export default withStyles(styles, 'FlexItem')(FlexBox)

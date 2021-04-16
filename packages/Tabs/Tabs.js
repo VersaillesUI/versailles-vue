@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import { withStyles } from '../styles'
 import FlexBox from '../FlexBox'
 
@@ -10,10 +10,10 @@ const styles = (theme) => {
   }
 }
 
-const Tabs = Vue.extend({
+const Tabs = defineComponent({
   render (h) {
     return <FlexBox flexWrap="nowrap" class={this.classes.root}>
-      {this.$slots.default}
+      {this.$slots.default()}
     </FlexBox>
   }
 })

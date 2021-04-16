@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import { withStyles } from '../styles'
 import clsx from 'clsx'
 import PropTypes from '../propTypes'
@@ -59,7 +59,7 @@ export const props = {
   }
 }
 
-const Paper = Vue.extend({
+const Paper = defineComponent({
   props,
   computed: {
     styles () {
@@ -69,16 +69,12 @@ const Paper = Vue.extend({
       }
     }
   },
-  render (h) {
-    return <this.component {
-      ...{
-        on: this.$listeners
-      }
-    } class={clsx([
+  render () {
+    return <this.component {...this.$attrs} class={clsx([
       this.classes.root,
       this.classes[this.varient],
       this.fullWidth && this.classes.fullWidth])} style={this.styles}>
-      {this.$slots.default}
+      {this.$slots.default()}
     </this.component>
   }
 })

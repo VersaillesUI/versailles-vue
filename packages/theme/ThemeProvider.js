@@ -1,32 +1,25 @@
-import Vue from 'vue'
+import { defineComponent, provide, nextTick } from 'vue'
 import { merge, isEqual, cloneDeep } from 'lodash'
 import { createGlobalStyles } from '../styles/withStyles'
 import Theme from './Theme'
 
-export default Vue.extend({
+export default defineComponent({
   props: {
     theme: {
       type: Object
     }
   },
-  data () {
+  setup () {
+    const theme = new Theme()
+    provide('theme', theme)
     return {
-      $theme: null
+      themeContext: theme
     }
-  },
-  provide () {
-    return {
-      $theme: this.$theme
-    }
-  },
-  beforeCreate () {
-    this.$theme = new Theme()
   },
   watch: {
     theme: {
-      handler (next, prev) {
-        if (isEqual(next, prev)) return
-        this.$theme.updateWith(next)
+      handler (next) {
+        this.theme.updateWith(next)
       },
       deep: false
     }
@@ -34,24 +27,24 @@ export default Vue.extend({
   created () {
     this.previousTheme = null
     const { overrides, ...themeConfig } = cloneDeep(this.theme || {})
-    this.$theme.overrides = overrides || {}
-    this.$theme.updateWith = (theme) => {
+    this.themeContext.overrides = overrides || {}
+    this.themeContext.updateWith = (theme) => {
       if (isEqual(this.previousTheme, theme)) {
         return
       }
-      this.$theme.mergeWith(theme)
+      this.themeContext.mergeWith(theme)
       if (theme.scrollbar) {
         this.createScrollerStyle()
       }
-      this.$theme.observe.next(this.$theme)
+      this.themeContext.observe.next(this.themeContext)
       this.previousTheme = theme
     }
-    merge(this.$theme, themeConfig)
+    merge(this.themeContext, themeConfig)
   },
   methods: {
     createScrollerStyle () {
-      this.$nextTick(() => {
-        const { scrollbar } = this.$theme
+      nextTick(() => {
+        const { scrollbar } = this.themeContext
         const styles = {
           '.scrollbar-track': scrollbar.track,
           '.scrollbar-track-x': scrollbar.trackX,
@@ -60,10 +53,10 @@ export default Vue.extend({
           '.scrollbar-thumb-x': scrollbar.thumbX,
           '.scrollbar-thumb-y': scrollbar.thumbY
         }
-        if (this.$theme.uuid) {
+        if (this.themeContext.uuid) {
           createGlobalStyles({
-            [`Vui-${this.$theme.uuid}-Scroller-root`]: styles
-          }, `Vui-${this.$theme.uuid}-Scrollbar`, '', 'Scrollbar')
+            [`Vui-${this.themeContext.uuid}-Scroller-root`]: styles
+          }, `Vui-${this.themeContext.uuid}-Scrollbar`, '', 'Scrollbar')
         } else {
           createGlobalStyles({
             [`Vui-Scroller-root`]: styles
@@ -76,6 +69,6 @@ export default Vue.extend({
     this.createScrollerStyle()
   },
   render (h) {
-    return <div>{this.$slots.default || null}</div>
+    return <>{this.$slots.default() || null}</>
   }
 })

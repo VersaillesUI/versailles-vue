@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import { withStyles } from '../styles'
 import anime from 'animejs/lib/anime.es.js'
 
@@ -15,7 +15,7 @@ const styles = (theme) => {
 
 const SKIP_PROPERTIES = ['width', 'height']
 
-const Animation = Vue.extend({
+const Animation = defineComponent({
   props: {
     cssProperty: {
       type: String
@@ -102,7 +102,7 @@ const Animation = Vue.extend({
   },
   render (h) {
     return <div class={this.classes.root}>
-      <this.component class={this.classes.content} ref="content">{this.$slots.default}</this.component>
+      <this.component class={this.classes.content} ref="content">{this.$slots.default()}</this.component>
     </div>
   }
 })

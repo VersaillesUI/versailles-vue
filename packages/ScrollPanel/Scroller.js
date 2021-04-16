@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import SmoothScrollbar, { ScrollbarPlugin } from 'smooth-scrollbar'
 import { withStyles } from '../styles'
 
@@ -29,7 +29,7 @@ export const styles = (theme) => {
   }
 }
 
-const ScrollPanel = Vue.extend({
+const ScrollPanel = defineComponent({
   props: {
     defaultOptions: {
       type: Object,
@@ -95,7 +95,7 @@ const ScrollPanel = Vue.extend({
       this.$emit('update', this.scrollbar)
     }
   },
-  destroyed () {
+  unmounted () {
     if (this.scrollbar) {
       this.scrollbar.removeListener(this.handleScroll)
       this.scrollbar.destroy()
@@ -103,18 +103,14 @@ const ScrollPanel = Vue.extend({
     this.scrollbar = null
   },
   render (h) {
-    return <div style={this.styles} class={this.classes.root} {
-      ...{
-        on: this.$listeners
-      }
-    }>
+    return <div style={this.styles} class={this.classes.root} {...this.$attrs}>
       <div class={this.classes.wrapper} ref="scrollbar">
         <div style={{
           width: '100%',
           overflow: 'hidden',
           ...this.scrollerStyle
         }}>
-          {this.$slots.default}
+          {this.$slots.default()}
         </div>
       </div>
     </div>

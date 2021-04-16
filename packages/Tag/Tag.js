@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import { withStyles } from '../styles'
 import hexToRgba from 'hex-to-rgba'
 import clsx from 'clsx'
@@ -86,7 +86,7 @@ export const props = {
   }
 }
 
-const Tag = Vue.extend({
+const Tag = defineComponent({
   props,
   render () {
     return <span class={clsx([

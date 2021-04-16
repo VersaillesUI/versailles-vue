@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import { withStyles } from '../styles'
 import clsx from 'clsx'
 
@@ -40,7 +40,7 @@ export const props = {
   }
 }
 
-const Checkbox = Vue.extend({
+const Checkbox = defineComponent({
   props,
   watch: {
     checked (val) {

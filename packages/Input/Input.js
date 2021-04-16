@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import { withStyles } from '../styles'
 import clsx from 'clsx'
 import PropTypes from '../propTypes'
@@ -55,7 +55,7 @@ export const props = {
   }
 }
 
-const Input = Vue.extend({
+const Input = defineComponent({
   props,
   data () {
     return {

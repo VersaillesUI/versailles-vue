@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import { withStyles } from '../styles'
 import clsx from 'clsx'
 
@@ -19,7 +19,7 @@ const styles = theme => {
   }
 }
 
-const Link = Vue.extend({
+const Link = defineComponent({
   props: {
     component: {
       type: String,
@@ -54,7 +54,7 @@ const Link = Vue.extend({
     return <this.component href={this.href} onClick={this.handleClick} class={clsx([
       this.classes.root,
       this.classes[this.color]
-    ])}>{this.$slots.default}</this.component>
+    ])}>{this.$slots.default()}</this.component>
   }
 })
 

@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import { withStyles } from '../styles'
 import Button from '../Button'
 import FlexItem from '../FlexBox'
@@ -43,7 +43,7 @@ export const props = {
   }
 }
 
-const NavBarItem = Vue.extend({
+const NavBarItem = defineComponent({
   props,
   render () {
     return <FlexItem flexGrow={0} alignItems="center" justifyContent="center" class={clsx([

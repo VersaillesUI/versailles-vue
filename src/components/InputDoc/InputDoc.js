@@ -63,7 +63,7 @@ const ComponentDoc = {
       })
     },
     classNames () {
-      const classes = inputStyles(this.$theme)
+      const classes = inputStyles(this.theme)
       return sortBy(Object.keys(classes)).map(key => {
         return {
           name: key,

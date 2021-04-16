@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import { withStyles } from '../styles'
 import ScrollPanel from '../ScrollPanel'
 import clsx from 'clsx'
@@ -89,7 +89,7 @@ export const props = {
   }
 }
 
-const Table = Vue.extend({
+const Table = defineComponent({
   props,
   methods: {
     renderColGroups () {

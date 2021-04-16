@@ -1,4 +1,4 @@
-import VueRouter from 'vue-router'
+import { createRouter, createWebHashHistory } from  'vue-router'
 import App from './App'
 import Components from './Components'
 import Palettle from './Palettle'
@@ -11,10 +11,12 @@ import PaperDoc from './components/PaperDoc'
 import TypopraphyDoc from './components/TypopraphyDoc'
 import Thunisoft from './Thunisoft/index'
 
-const router = new VueRouter({
+const router = createRouter({
+  history: createWebHashHistory(),
   routes: [
     {
       path: '/thunisoft',
+      name: 'thunisoft',
       component: Thunisoft
     },
     { 

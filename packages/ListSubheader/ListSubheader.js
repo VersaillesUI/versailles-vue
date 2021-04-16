@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import { withStyles } from '../styles'
 import FlexBox from '../FlexBox'
 import FlexItem from '../FlexItem'
@@ -50,7 +50,7 @@ const styles = (theme) => {
   }
 }
 
-const ListSubheader = Vue.extend({
+const ListSubheader = defineComponent({
   props: {
     icon: {
       type: [Boolean, Object]
@@ -105,7 +105,7 @@ const ListSubheader = Vue.extend({
     transitionDuration () {
       if (this.$refs.animation) {
         const elem = this.$refs.animation.$el
-        const height = this.expanded ? Math.abs(elem.scrollHeight - elem.offsetHeight) : elem.offsetHeight
+        const height = this.expanded ? elem.scrollHeight - elem.offsetHeight : elem.offsetHeight
         const value = Math.sqrt(height / 30) * 100
         return value
       }
@@ -114,17 +114,13 @@ const ListSubheader = Vue.extend({
   },
   computed: {
     childrenLength () {
-      return this.$slots.default ? this.$slots.default.length : 0
+      return this.$slots.default() ? this.$slots.default.length : 0
     }
   },
   render (h) {
     const dur = this.transitionDuration()
-    return <li data-loaded={this.loaded} {
-      ...{
-        on: this.$listeners
-      }
-    } class={this.classes.root}>
-      <FlexBox onClick={this.handleToggleCollapse} class={this.classes.content} style={{ paddingLeft: this.$theme.spacing(this.indent).valueOf() }}>
+    return <li {...this.$attrs} class={this.classes.root}>
+      <FlexBox onClick={this.handleToggleCollapse} class={this.classes.content} style={{ paddingLeft: this.theme.spacing(this.indent).valueOf() }}>
         {this.icon && <FlexItem flexGrow={0} class={this.classes.icon} key="icon">{this.icon}</FlexItem>}
         {this.label && <FlexItem title={this.label} overflow="hidden" class={this.classes.label} key="label">
           <span class={this.classes.labelWrapper}>{this.label}</span>  
@@ -143,7 +139,7 @@ const ListSubheader = Vue.extend({
         style={this.childrenStyle}
         class={this.classes.children}
         onEnd={this.handleAnimationEnd}>
-        {this.$slots.default}
+        {this.$slots.default()}
       </Animation>
     </li>
   }

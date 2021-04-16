@@ -1,4 +1,4 @@
-import Vue, { VNode } from 'vue'
+import { defineComponent } from 'vue'
 import { withStyles } from '../styles'
 import { FlexItem } from '../FlexBox'
 
@@ -10,7 +10,7 @@ const styles = (theme) => {
   }
 }
 
-const Tab = Vue.extend({
+const Tabs = defineComponent({
   props: {
     label: {
       type: String
@@ -23,11 +23,7 @@ const Tab = Vue.extend({
     }
   },
   render (h) {
-    return <FlexItem {
-      ...{
-        on: this.$listeners
-      }
-    } class={this.classes.root}>
+    return <FlexItem {...this.$attrs} class={this.classes.root}>
       {this.label}
     </FlexItem>
   }

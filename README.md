@@ -16,7 +16,7 @@ npm run dev
 
 ## Basic usage
 ```jsx
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import { Theme, AppBar } from 'thunisoft-ui'
 
 new Vue({
@@ -50,7 +50,7 @@ const styles = theme => {
 
 const Component = {
   mounted () {
-    this.$theme.updateWith({
+    this.theme.updateWith({
       colors: {
         primary: {
           main: '#00b0da'

@@ -1,7 +1,7 @@
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import { withStyles } from '../styles'
-import AtyIcon from '@com.thunisoft.artery/artery-ui/lib/aty-icon'
-import '@com.thunisoft.artery/artery-ui/src/components/css/common/iconfont/ionicons.less'
+// import AtyIcon from '@com.thunisoft.artery/artery-ui/lib/aty-icon'
+// import '@com.thunisoft.artery/artery-ui/src/components/css/common/iconfont/ionicons.less'
 
 const styles = {
   root: {
@@ -14,7 +14,7 @@ const styles = {
   }
 }
 
-const Icon = Vue.extend({
+const Icon = defineComponent({
   props: {
     type: {
       type: String
@@ -37,11 +37,8 @@ const Icon = Vue.extend({
     }
   },
   render (h) {
-    return <AtyIcon style={this.styles} class={this.classes.root} type={this.type} size={this.size} {
-      ...{
-        on: this.$listeners
-      }
-    }></AtyIcon>
+    return null
+    return <AtyIcon style={this.styles} class={this.classes.root} type={this.type} size={this.size} {...this.$attrs}></AtyIcon>
   }
 })
 

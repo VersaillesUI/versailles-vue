@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import { withStyles } from '../styles'
 import clsx from 'clsx'
 
@@ -70,20 +70,16 @@ export const props = {
   }
 }
 
-const IconButton = Vue.extend({
+const IconButton = defineComponent({
   props,
   render () {
-    return <this.component {
-      ...{
-        on: this.$listeners
-      }
-    } disabled={this.disabled} class={clsx([
+    return <this.component {...this.$attrs} disabled={this.disabled} class={clsx([
       this.classes.root,
       this.classes[this.size],
       this.classes[this.color],
       this.disabled && this.classes.disabled
     ])}>
-      {this.$slots.default}
+      {this.$slots.default()}
     </this.component>
   }
 })

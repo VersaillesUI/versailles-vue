@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import { withStyles } from 'packages'
 import { props, styles as buttonStyles } from 'packages/AppBar'
 import UsageDoc from '!!raw-loader!./Usage.doc.js'
@@ -16,7 +16,7 @@ const styles = theme => {
   }
 }
 
-const ComponentDoc = Vue.extend({
+const ComponentDoc = defineComponent({
   data () {
     return {
       propColumns: [
@@ -64,7 +64,7 @@ const ComponentDoc = Vue.extend({
       })
     },
     classNames () {
-      const classes = buttonStyles(this.$theme)
+      const classes = buttonStyles(this.theme)
       return sortBy(Object.keys(classes)).map(key => {
         return {
           name: key,

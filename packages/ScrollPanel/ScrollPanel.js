@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import Scroller from './Scroller'
 import { withStyles } from '../styles'
 import PropTypes from '../propTypes'
@@ -16,7 +16,7 @@ export const props = {
   }
 }
 
-const ScrollPanel = Vue.extend({
+const ScrollPanel = defineComponent({
   props,
   data () {
     return {
@@ -65,12 +65,8 @@ const ScrollPanel = Vue.extend({
       scrollerStyle={{
         ...this.paddingStyles,
         ...this.contentStyle
-      }} {
-      ...{
-        on: this.$listeners
-      }
-    } ref="scroller">
-      {this.$slots.default}
+      }} {...this.$attrs} ref="scroller">
+      {this.$slots.default()}
     </Scroller>
   }
 })

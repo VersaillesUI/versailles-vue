@@ -34,7 +34,7 @@ const ComponentDoc = {
       })
     },
     classNames () {
-      const classes = paperStyles(this.$theme)
+      const classes = paperStyles(this.theme)
       return sortBy(Object.keys(classes)).map(key => {
         return {
           name: key,

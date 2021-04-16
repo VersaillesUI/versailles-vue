@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import { withStyles, ThemeProvider } from 'packages'
 import NavBar from 'packages/NavBar'
 import NavBarItem from 'packages/NavBarItem'
@@ -136,7 +136,7 @@ const styles = theme => {
   }
 }
 
-const Component = Vue.extend({
+const Component = defineComponent({
   data () {
     return {
       columns: [
@@ -303,12 +303,12 @@ const Component = Vue.extend({
       this.themeIndex = (++this.themeIndex) % 3
       const theme = [defaultTheme, redTheme, orangeTheme]
       this.theme = theme[this.themeIndex]
-      this.$theme.updateWith(this.theme)
+      this.theme.updateWith(this.theme)
     }
   },
   render () {
     return <div>
-      <AppBar elevation={0} size="small">
+      <AppBar onClick={console.log} position="fixed" size="small">
         <FlexItem flexGrow={0}>
           <Typography varient="title" class={this.classes.title}>华宇皮肤</Typography>
         </FlexItem>
@@ -387,7 +387,7 @@ const Component = Vue.extend({
                 <div>
                   <Button varient="outlined" color="inherit">重置</Button>
                 </div>
-                <div style={{ marginTop: this.$theme.spacing(2.5) }}>
+                <div style={{ marginTop: this.theme.spacing(2.5) }}>
                   <Button onClick={this.handlePalettleClick}>查询</Button>
                 </div>
               </FlexItem>

@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import { withStyles } from '../styles'
 
 const styles = (theme) => {
@@ -9,14 +9,10 @@ const styles = (theme) => {
   }
 }
 
-const List = Vue.extend({
+const List = defineComponent({
   render (h) {
-    return <ul {
-      ...{
-        on: this.$listeners
-      }
-    } class={this.classes.root}>
-      {this.$slots.default}
+    return <ul {...this.$attrs} class={this.classes.root}>
+      {this.$slots.default()}
     </ul>
   }
 })

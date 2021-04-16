@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import { withStyles } from '../styles'
 import FlexBox from '../FlexBox'
 import FlexItem from '../FlexItem'
@@ -32,7 +32,7 @@ const styles = (theme) => {
   }
 }
 
-const ListItem = Vue.extend({
+const ListItem = defineComponent({
   props: {
     icon: {
       type: [Boolean, Object]
@@ -53,12 +53,8 @@ const ListItem = Vue.extend({
     }
   },
   render (h) {
-    return <li {
-      ...{
-        on: this.$listeners
-      }
-    } class={this.classes.root}>
-      <FlexBox onTransitionstart={this.handleStopPropagation} onTransitionend={this.handleStopPropagation} class={this.classes.content} style={{ paddingLeft: this.$theme.spacing(this.indent).valueOf() }}>
+    return <li {...this.$attrs} class={this.classes.root}>
+      <FlexBox onTransitionstart={this.handleStopPropagation} onTransitionend={this.handleStopPropagation} class={this.classes.content} style={{ paddingLeft: this.theme.spacing(this.indent).valueOf() }}>
         {this.icon && <FlexItem flexGrow={0} class={this.classes.icon} key="icon">{this.icon}</FlexItem>}
         {this.label && <FlexItem class={this.classes.label} key="label">{this.label}</FlexItem>}
       </FlexBox>

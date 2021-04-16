@@ -1,18 +1,13 @@
 import 'babel-polyfill'
-import Vue from 'vue'
-import { ThemeProvider } from 'packages'
+import { createApp } from 'vue'
 import router from './router'
-import VueRouter from 'vue-router'
 
 import './style.less'
 
-Vue.use(VueRouter)
-
-new Vue({
-  router,
+createApp({
   render () {
-    return <div>
+    return <keep-alive>
       <router-view></router-view>
-    </div>
+    </keep-alive>
   }
-}).$mount('#app')
+}).use(router).mount('#app')

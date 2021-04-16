@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import { withStyles } from '../styles'
 import FlexBox from '../FlexBox'
 import FlexItem from '../FlexItem'
@@ -40,7 +40,7 @@ export const props = {
   }
 }
 
-const FormItem = Vue.extend({
+const FormItem = defineComponent({
   props,
   computed: {
     styles () {
@@ -64,7 +64,7 @@ const FormItem = Vue.extend({
   render () {
     return <FlexBox style={this.styles} class={this.classes.root} alignItems="center">
       <FlexItem class={this.classes.label} flexGrow={0} flexBasis={this.labelSpan}>{this.label}</FlexItem>
-      <FlexItem display="flex" class={this.classes.wrapper} flexGrow={1} flexBasis={this.wrapperSpan}>{this.$slots.default}</FlexItem>
+      <FlexItem display="flex" class={this.classes.wrapper} flexGrow={1} flexBasis={this.wrapperSpan}>{this.$slots.default()}</FlexItem>
     </FlexBox>
   }
 })

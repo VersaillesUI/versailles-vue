@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import { withStyles } from '../styles'
 import FlexBox from '../FlexBox'
 import TableHeader from './TableHeader'
@@ -62,7 +62,7 @@ const FIXED = {
   RIGHT: 'right'
 }
 
-const Table = Vue.extend({
+const Table = defineComponent({
   props,
   data () {
     return {

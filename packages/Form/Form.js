@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import { withStyles } from '../styles'
 import FlexBox from '../FlexBox'
 import FormItem from '../FormItem'
@@ -30,26 +30,24 @@ export const props = {
   }
 }
 
-const Form = Vue.extend({
+const Form = defineComponent({
   props,
   render () {
+    const slots = this.$slots.default()
     return <FlexBox flexWrap="wrap" class={clsx([
       this.classes.root,
       this.disableGutterBottom && this.classes.disableGutterBottom
     ])}>
       {
-        Array.from(this.$slots.default).map(item => {
-          return <FormItem class={this.classes.formItem} {
+        Array.from(slots || []).map((item, index) => {
+          return <item.type key={index} class={this.classes.formItem} {
             ...{
-              props: {
-                layout: this.layout,
-                ...item.componentOptions.propsData
-              },
-              attrs: item.data.attrs
+              layout: this.layout,
+              ...item.props
             }
           }>
-            {item.componentOptions.children}
-          </FormItem>
+            {item.children.default()}
+          </item.type>
         })
       }
     </FlexBox>

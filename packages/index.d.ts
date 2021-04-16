@@ -1,4 +1,3 @@
-import Vue, { VNodeData } from 'vue/types'
 import { Theme } from './theme'
 
 export { withStyles } from './styles'
@@ -23,20 +22,7 @@ export { default as NavBar } from './NavBar'
 export { default as NavBarItem } from './NavBarItem'
 export { default as IconButton } from './IconButton'
 
-declare module 'vue/types/options' {
-  interface ComponentOptions<V extends Vue> {
-    class?: String;
-    style?: Object;
-  }
-}
-
-declare module 'vue/types/vue' {
-  interface Vue {
-    classes: Object;
-  }
-}
-
-export interface IBaseProps extends VNodeData {
+export interface IBaseProps {
   class?: String;
   style?: Object;
   onClick?: MouseEvent;

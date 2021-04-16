@@ -1,10 +1,5 @@
 import { IBaseProps } from '..'
-
-declare namespace JSX {
-  interface Element {
-      [elemName: string]: any;
-  }
-}
+import { DefineComponent } from 'vue'
 
 interface IProps extends IBaseProps {
   flexGrow?: Number;
@@ -17,4 +12,6 @@ interface IProps extends IBaseProps {
   overflowY: 'hidden' | 'auto' | 'scroll' | 'visible';
 }
 
-export default function FlexItem(props: IProps): JSX.Element
+declare const _default: DefineComponent<IProps>
+
+export default _default

@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import Typography from 'thunisoft-ui/esm/Typography'
 import { withStyles } from 'thunisoft-ui/esm/styles'
 
@@ -11,7 +11,7 @@ export const styles = theme => {
   }
 }
 
-const Component = Vue.extend({
+const Component = defineComponent({
   render () {
     return <div class={this.classes.root}>
       <Typography gutterBottom varient="h1">H1. Heading 1</Typography>

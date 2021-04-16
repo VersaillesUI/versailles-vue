@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import { withStyles } from '../styles'
 import clsx from 'clsx'
 import { createPopper } from '@popperjs/core/dist/umd/popper-lite'
@@ -27,7 +27,7 @@ export const props = {
   }
 }
 
-const Popover = Vue.extend({
+const Popover = defineComponent({
   props,
   data () {
     return {
@@ -126,7 +126,7 @@ const Popover = Vue.extend({
             resolve()
           },
           render () {
-            return <ThemeProvider theme={cloneDeep(me.$theme)}>
+            return <ThemeProvider theme={cloneDeep(me.theme)}>
               <this.Component></this.Component>
             </ThemeProvider>
           }

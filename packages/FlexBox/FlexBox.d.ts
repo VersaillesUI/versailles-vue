@@ -1,10 +1,5 @@
 import { IBaseProps } from '..'
-
-declare namespace JSX {
-  interface Element {
-      [elemName: string]: any;
-  }
-}
+import { DefineComponent } from 'vue'
 
 interface IProps extends IBaseProps {
   block?: true | false;
@@ -15,4 +10,7 @@ interface IProps extends IBaseProps {
   justifyContent: 'flex-start' | 'center' | 'flex-end' | 'space-round' | 'space-between' | 'space-evenly' | 'stretch' | 'revert';
 }
 
-export default function FlexBox(props: IProps): JSX.Element
+
+declare const _default: DefineComponent<IProps>
+
+export default _default

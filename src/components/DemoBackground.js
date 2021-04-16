@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import { withStyles } from 'packages/styles'
 import clsx from 'clsx'
 import Typography from 'packages/Typography'
@@ -27,7 +27,7 @@ const styles = (theme) => {
   }
 }
 
-const DemoBackground = Vue.extend({
+const DemoBackground = defineComponent({
   props: {
     dark: {
       type: Boolean

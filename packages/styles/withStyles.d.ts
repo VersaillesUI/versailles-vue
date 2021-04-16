@@ -1,12 +1,10 @@
-import { VNode, VueConstructor } from 'vue'
+import { DefineComponent, VNode } from 'vue'
 
 interface IStyles {
-  root: {
-
-  }
+  [index: string]: string
 }
 
-type Wrapper = (WrappedComponent: VueConstructor) => VNode
+type Wrapper = (WrappedComponent: DefineComponent) => VNode
 
 /**
  * @description 用于绑定CSS-IN-JS的高阶组件
