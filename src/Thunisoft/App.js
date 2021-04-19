@@ -1,4 +1,4 @@
-import { defineComponent } from 'vue'
+import { defineComponent, reactive } from 'vue'
 import { withStyles, ThemeProvider } from 'packages'
 import NavBar from 'packages/NavBar'
 import NavBarItem from 'packages/NavBarItem'
@@ -139,7 +139,7 @@ const styles = theme => {
 const Component = defineComponent({
   data () {
     return {
-      columns: [
+      columns: reactive([
         {
           title: '序号',
           dataIndex: 'seq',
@@ -172,19 +172,16 @@ const Component = defineComponent({
         },
         {
           title: '状态',
-          dataIndex: 'field_d',
-          width: '300px'
+          dataIndex: 'field_d'
         },
         {
           title: '时间信息',
           dataIndex: 'field_e',
-          align: 'left',
-          width: '300px'
+          align: 'left'
         },
         {
           title: '操作',
           align: 'left',
-          width: '300px',
           renderCell: () => {
             return <FlexBox alignItems="center">
               <Link>编辑</Link>
@@ -193,7 +190,7 @@ const Component = defineComponent({
             </FlexBox>
           }
         }
-      ],
+      ]),
       tableData: [
         {
           seq: '1',
@@ -259,7 +256,7 @@ const Component = defineComponent({
   methods: {
     handleRowChange (row) {
       return (val) => {
-        this.$set(row, 'checked', val)
+        row.checked = val
       }
     },
     renderNodes (data) {

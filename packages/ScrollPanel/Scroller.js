@@ -93,6 +93,9 @@ const ScrollPanel = defineComponent({
     },
     handleScroll () {
       this.$emit('update', this.scrollbar)
+    },
+    handleStopPropagation (evt) {
+      evt.stopPropagation()
     }
   },
   unmounted () {
@@ -104,7 +107,7 @@ const ScrollPanel = defineComponent({
   },
   render (h) {
     return <div style={this.styles} class={this.classes.root} {...this.$attrs}>
-      <div class={this.classes.wrapper} ref="scrollbar">
+      <div onWheel={this.handleStopPropagation} class={this.classes.wrapper} ref="scrollbar">
         <div style={{
           width: '100%',
           overflow: 'hidden',

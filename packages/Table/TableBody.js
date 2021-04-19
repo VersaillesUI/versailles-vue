@@ -122,6 +122,11 @@ const Table = defineComponent({
         </tr>
       })
     },
+    handleNativeScrollbarPositionUpdate (evt) {
+      this.$emit('scroll', {
+        scrollTop: evt.target.scrollTop - evt.wheelDeltaY
+      })
+    },
     handleScrollbarPositionUpdate (scrollbar) {
       this.$emit('scroll', scrollbar)
     },
@@ -150,6 +155,7 @@ const Table = defineComponent({
           overflow: 'hidden',
           width: this.tableWidth + 'px'
         }}
+        onWheel={this.handleNativeScrollbarPositionUpdate}
         onUpdate={this.handleScrollbarPositionUpdate}>
         <table class={this.classes.table} style={{ width: this.width }}>
           <colgroup>

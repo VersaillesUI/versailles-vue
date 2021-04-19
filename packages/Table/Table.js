@@ -67,7 +67,8 @@ const Table = defineComponent({
   data () {
     return {
       colgroups: [],
-      tableWidth: 0
+      tableWidth: 0,
+      hasScrollX: false
     }
   },
   methods: {
@@ -112,21 +113,24 @@ const Table = defineComponent({
     calcColgroups () {
       let width = 0
       const nodes = []
+      const parentWidth = this.$el.scrollWidth
       this.traverse(this.columns, (item) => {
         if (item.hasOwnProperty('children')) {
           return
         }
-        item.width = item.width
-        const widthNum = Number(item.width.replace(/[^0-9]/g, ''))
-        if (/\%$/.test(item.width)) {
-          width += this.$el.scrollWidth * widthNum
-        } else {
-          width += widthNum
+        if (item.width) {
+          const widthNum = Number(item.width.replace(/[^0-9]/g, ''))
+          if (/\%$/.test(item.width)) {
+            width += parentWidth * widthNum
+          } else {
+            width += widthNum
+          }
         }
         nodes.push(item)
       })
       const colWidth = this.calcColWidth(nodes)
-      this.tableWidth = width
+      this.tableWidth = Math.max(width, parentWidth)
+      this.hasScrollX = this.tableWidth > parentWidth
       return nodes.map(o => {
         o.width = o.width || colWidth
         return o
@@ -149,7 +153,7 @@ const Table = defineComponent({
   render (h) {
     const leftColumns = this.columns.filter(o => o.fixed === FIXED.LEFT)
     return <FlexBox flexDirection="column" class={this.classes.root}>
-      <Paper square varientCenter elevation={6} class={clsx([
+      <Paper square varientCenter elevation={this.hasScrollX ? 6 : 0} class={clsx([
         this.classes.fixedLeft,
         this.classes.root
       ])}>
